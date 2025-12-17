@@ -17,6 +17,7 @@ export class UpdateUserImpl implements UpdateUser {
     const updatedUser = {
       ...user,
       birthDate: new Date(user.birthDate),
+      createdAt: new Date(),
       updatedAt: new Date(),
     };
 
