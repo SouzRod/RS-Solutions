@@ -10,6 +10,7 @@ Backend API developed with Node.js and TypeScript on Fastify, organized into wel
 ## Requirements
 
 -   [Node.js](https://nodejs.org/) (recommended version: \>= 24.11.0)
+-   [TypeScript](https://www.typescriptlang.org/)
 -   [MongoDB](https://www.mongodb.com/)
 -   [Redis](https://redis.io/)
 -   [Docker](https://www.docker.com/)

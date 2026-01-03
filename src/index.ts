@@ -30,7 +30,6 @@ import { HttpStatus } from './domain/enum/http-status.enum';
   app.setErrorHandler(function (error: BaseError, request, reply) {
     console.error(error);
     if (error.statusCode) {
-      this.log.error(error);
       return reply.status(error.statusCode).send(error);
     }
 
@@ -44,6 +43,6 @@ import { HttpStatus } from './domain/enum/http-status.enum';
       process.exit(1);
     }
     console.info(`Server listening at ${address}`);
-    console.info(`Swagger listening at ${address}${config.app.stripPrefix}/docs`);
+    console.info(`Swagger at ${address}${config.app.stripPrefix}/docs`);
   });
 })()
