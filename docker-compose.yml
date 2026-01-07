@@ -1,15 +1,39 @@
-version: "3.9"
-
 volumes:
-  mongo_data_node-fastify:
+  mongo_data_node_fastify:
+
+networks:
+  node_fastify_net:
+    driver: bridge
 
 services:
+  redis:
+    image: redis:latest
+    container_name: node_fastify_redis
+    networks:
+      - node_fastify_net
+    ports:
+      - "6379:6379"
+    restart: always
+
+  mongo:
+    image: mongo:latest
+    container_name: node_fastify_mongo
+    networks:
+      - node_fastify_net
+    ports:
+      - "27017:27017"
+    volumes:
+      - mongo_data_node_fastify:/data/db
+    restart: always
+
   app:
-    container_name: node-fastify_app
-    image: node-fastify:latest
+    container_name: node_fastify_app
+    image: node_fastify:latest
     build:
       context: .
       dockerfile: Dockerfile
+    networks:
+      - node_fastify_net
     ports:
       - "3000:3000"
     environment:
@@ -21,29 +45,12 @@ services:
       REDIS_ENABLED: false
       REDIS_PORT: 6379
       REDIS_HOST: redis
-      REDIS_DEFAULT_EXPIRE: 3600
+      REDIS_DEFAULT_EXPIRE: 5
 
       # MongoDB
-      MONGODB_URI: mongodb://mongo:27017/
-      MONGODB_DB_NAME: node-fastify
+      MONGODB_URI: mongodb://mongo:27017/node_fastify
     depends_on:
       - redis
       - mongo
     restart: always
 
-  redis:
-    image: redis:latest
-    container_name: node-fastify_redis
-    ports:
-    - "6379:6379"
-    command: redis-server --appendonly yes
-    restart: always
-
-  mongo:
-    image: mongo:latest
-    container_name: node-fastify_mongo
-    ports:
-    - "27017:27017"
-    volumes:
-      - mongo_data_node-fastify:/data/db
-    restart: always
