@@ -1,11 +1,9 @@
 import Redis from 'ioredis';
-
 import { ConfigImpl } from '@/application/config';
-import { Config } from '@/domain/interfaces';
 
 export class RedisExternal {
   private client: Redis;
-  private config: Config = new ConfigImpl();
+  private config = new ConfigImpl();
 
   constructor() {
     this.client = this.config.redis.enabled ? new Redis({

@@ -1,5 +1,5 @@
-import { ConfigImpl } from "@/application/config";
 import { Db, MongoClient } from "mongodb";
+import { ConfigImpl } from "@/application/config";
 
 export class MongoDBExternal {
   private client!: MongoClient;
